@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Habit Tracker ver.3</title>
+  <title>Habit Tracker</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4CAF50">
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
+  <script defer src="main.js"></script>
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
-  <h1>Habit Tracker</h1>
-  <div id="tracker"></div>
-  <p><a href="history.html">履歴一覧</a></p>
-  <script src="script.js"></script>
+  <h1>Habit Tracker ver.4</h1>
+
+  <!-- JSONエクスポート／インポートボタン -->
+  <div style="margin: 1em;">
+    <button id="exportBtn">📤 記録をエクスポート</button>
+    <button id="importBtn">📥 記録をインポート</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" />
+  </div>
+
+  <div id="app"></div>
 </body>
 </html>

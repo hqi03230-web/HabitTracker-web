@@ -1,68 +1,50 @@
-/* ===============================
-   Habit Tracker 共通スタイル
-   =============================== */
-
-/* 🟢 #4CAF50 = 緑系メインカラー（テーマ色） */
+/* ==============================
+   全体設定
+============================== */
 body {
   font-family: sans-serif;
   text-align: center;
   margin: 0;
-  background-color: #fafafa; /* 明るい灰色の背景 */
+  background-color: #fafafa; /* ごく薄いグレー（背景） */
 }
 
-/* タイトルバー */
+/* ==============================
+   タイトル部分
+============================== */
 h1 {
-  background-color: #4CAF50; /* メインのグリーン */
+  background-color: #4CAF50; /* 明るいグリーン（メインカラー） */
   color: white;
   margin: 0;
   padding: 1em;
 }
 
-/* ===============================
-   ボタンスタイル（スマホ対応）
-   =============================== */
-
-/* 🔘 通常ボタン */
+/* ==============================
+   ボタンスタイル
+============================== */
 button {
   width: 90%;
-  max-width: 400px;
-  font-size: 1.5em;       /* 大きめフォント */
-  padding: 1em 0;         /* 上下に十分な余白 */
-  margin: 0.6em;
-  border-radius: 12px;
+  max-width: 450px;
+  font-size: 1.4em;       /* ← 大きくしてスマホでも押しやすく */
+  padding: 1.2em;         /* ← タップ領域拡大 */
+  margin: 0.7em;
+  border-radius: 14px;
   border: none;
-  background-color: #e0e0e0; /* 明るいグレー */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  touch-action: manipulation;
+  background-color: #e0e0e0; /* 薄いグレー（未実行状態） */
+  transition: background-color 0.2s, transform 0.1s;
 }
 
-/* ✅ 押された状態 */
+button:active {
+  transform: scale(0.97);
+}
+
 button.done {
-  background-color: #81C784; /* 明るいグリーン (#81C784 = Light Green 400) */
+  background-color: #81C784; /* 明るい緑（達成状態） */
   color: white;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* 📱 スマホ・タブレット最適化 */
-@media (max-width: 600px) {
-  button {
-    font-size: 1.6em;     /* さらに大きく */
-    padding: 1.2em 0;
-    margin: 0.8em;
-  }
-}
-
-/* 💻 PC向け調整 */
-@media (min-width: 601px) {
-  button {
-    font-size: 1.4em;
-  }
-}
-
-/* ===============================
-   表・履歴表示
-   =============================== */
-
+/* ==============================
+   テーブル表示
+============================== */
 table {
   border-collapse: collapse;
   margin: auto;
@@ -70,22 +52,29 @@ table {
 }
 
 th, td {
-  border: 1px solid #ccc;
-  padding: 0.5em;
+  border: 1px solid #ccc; /* 薄いグレーの罫線 */
+  padding: 0.6em;
   text-align: center;
-  font-size: 1em;
 }
 
-/* 🗓 月タイトル */
+/* ==============================
+   月見出し
+============================== */
 h2 {
-  margin-top: 1.5em;
+  margin-top: 1.8em;
   text-align: left;
-  font-size: 1.2em;
-  color: #333; /* 濃いグレー */
+  font-size: 1.3em;
+  color: #333; /* 濃いグレー（見出し文字） */
 }
 
-/* 日曜・土曜の文字色補足：
-   🔴 日曜: red
-   🔵 土曜: blue
-   平日: デフォルト (黒)
-*/
+/* ==============================
+   レスポンシブ調整
+============================== */
+@media (min-width: 600px) {
+  button { font-size: 1.6em; padding: 1.0em; }
+}
+
+@media (max-width: 599px) {
+  button { font-size: 1.5em; padding: 1.3em; }
+  th, td { padding: 0.5em; }
+}
