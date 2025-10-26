@@ -1,45 +1,91 @@
+/* ===============================
+   Habit Tracker 共通スタイル
+   =============================== */
+
+/* 🟢 #4CAF50 = 緑系メインカラー（テーマ色） */
 body {
   font-family: sans-serif;
   text-align: center;
   margin: 0;
-  background-color: #fafafa;
+  background-color: #fafafa; /* 明るい灰色の背景 */
 }
+
+/* タイトルバー */
 h1 {
-  background-color: #4CAF50;
+  background-color: #4CAF50; /* メインのグリーン */
   color: white;
   margin: 0;
   padding: 1em;
 }
+
+/* ===============================
+   ボタンスタイル（スマホ対応）
+   =============================== */
+
+/* 🔘 通常ボタン */
 button {
   width: 90%;
   max-width: 400px;
-  font-size: 1.2em;
-  padding: 0.8em;
-  margin: 0.5em;
-  border-radius: 10px;
+  font-size: 1.5em;       /* 大きめフォント */
+  padding: 1em 0;         /* 上下に十分な余白 */
+  margin: 0.6em;
+  border-radius: 12px;
   border: none;
-  background-color: #e0e0e0;
+  background-color: #e0e0e0; /* 明るいグレー */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  touch-action: manipulation;
 }
+
+/* ✅ 押された状態 */
 button.done {
-  background-color: #81C784;
+  background-color: #81C784; /* 明るいグリーン (#81C784 = Light Green 400) */
   color: white;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
-@media (min-width: 600px) {
-  button { font-size: 1.4em; }
+
+/* 📱 スマホ・タブレット最適化 */
+@media (max-width: 600px) {
+  button {
+    font-size: 1.6em;     /* さらに大きく */
+    padding: 1.2em 0;
+    margin: 0.8em;
+  }
 }
+
+/* 💻 PC向け調整 */
+@media (min-width: 601px) {
+  button {
+    font-size: 1.4em;
+  }
+}
+
+/* ===============================
+   表・履歴表示
+   =============================== */
+
 table {
   border-collapse: collapse;
   margin: auto;
   width: 95%;
 }
+
 th, td {
   border: 1px solid #ccc;
-  padding: 0.4em;
+  padding: 0.5em;
   text-align: center;
+  font-size: 1em;
 }
+
+/* 🗓 月タイトル */
 h2 {
   margin-top: 1.5em;
   text-align: left;
   font-size: 1.2em;
-  color: #333;
+  color: #333; /* 濃いグレー */
 }
+
+/* 日曜・土曜の文字色補足：
+   🔴 日曜: red
+   🔵 土曜: blue
+   平日: デフォルト (黒)
+*/
