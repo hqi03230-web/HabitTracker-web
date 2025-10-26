@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habit History</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Habit 履歴一覧</h1>
+<div class="table-container" id="history"></div>
+
+<script>
+const habits = ["tennis", "メリオール", "小田急使用", "英語学習", "コナ散歩"];
+const storageKey = "habitRecords";
+
+function loadData() {
+  return JSON.parse(localStorage.getItem(storageKey) || "{}");
+}
+
+function getAllDates(data) {
+  const allDates = new Set();
+  Object.values(data).forEach(arr => arr.forEach(d => allDates.add(d)));
+  return [...allDates].sort();
+}
+
+function formatDateJP(d) {
+  const date = new Date(d);
+  return `${date.getMonth()+1}/${date.getDate()}`;
+}
+
+function buildTable() {
+  const data = loadData();
+
+  const allDates = getAllDates(data);
+  if (allDates.length === 0) {
+    document.getElementById("history").textContent = "記録はまだありません。";
+    return;
+  }
+
+  // === 月ごとの範囲を取得 ===
+  const months = {};
+  allDates.forEach(d => {
+    const date = new Date(d);
+    const ym = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
+    if (!months[ym]) months[ym] = [];
+    months[ym].push(d);
+  });
+
+  let html = "";
+
+  // === 各月ごとに全日生成 ===
+  for (const ym of Object.keys(months)) {
+    const [year, month] = ym.split("-");
+    const y = parseInt(year);
+    const m = parseInt(month);
+    const daysInMonth = new Date(y, m, 0).getDate(); // 月末日を取得
+    const dates = [...Array(daysInMonth)].map((_, i) => {  
+      const d = new Date(y, m - 1, i + 1);
+      // ← ローカルタイムで日付文字列を生成
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    });
+
+    html += `<h2>${year}年${m}月</h2>`;
+    html += `<div class="table-container"><table><thead><tr><th>習慣</th>`;
+
+    // 日付ヘッダー（全日表示）
+    html += dates.map(d => {
+      const date = new Date(d);
+      const day = ["日","月","火","水","木","金","土"][date.getDay()];
+      const color = (day === "土") ? "blue" : (day === "日") ? "red" : "";
+      return `<th style="color:${color}">${date.getDate()}<br>${day}</th>`;
+    }).join("");
+
+    html += `</tr></thead><tbody>`;
+
+    // 習慣ごとの行
+    habits.forEach(habit => {
+      html += `<tr><td>${habit}</td>`;
+      html += dates.map(d => data[habit]?.includes(d) ? `<td>x</td>` : `<td></td>`).join("");
+      html += `</tr>`;
+    });
+
+    html += `</tbody></table></div>`;
+  }
+
+  document.getElementById("history").innerHTML = html;
+}
+
+buildTable();
+</script>
+</body>
+</html>

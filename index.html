@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HabitTracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Habit Tracker</h1>
+
+<div id="week-nav">
+  <button id="prevWeek">◀ 前の週</button>
+  <span id="weekRange"></span>
+  <button id="nextWeek">次の週 ▶</button>
+</div>
+
+<div class="table-container">
+  <table id="tracker">
+    <thead>
+      <tr id="date-row"></tr>
+    </thead>
+    <tbody id="habit-rows"></tbody>
+  </table>
+</div>
+
+<p class="link"><a href="history.html" target="_blank">📅 過去の記録</a></p>
+
+<script>
+const habits = ["tennis", "メリオール", "小田急使用", "英語学習", "コナ散歩"];
+const storageKey = "habitRecords";
+
+function getMonday(d = new Date()) {
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.setDate(diff));
+}
+function formatDate(d) {
+  return `${d.getMonth()+1}/${d.getDate()}`;
+}
+function getWeekDates(monday) {
+  return [...Array(7)].map((_, i) => {
+    const d = new Date(monday);
+    d.setDate(d.getDate() + i);
+    return d;
+  });
+}
+function loadData() {
+  return JSON.parse(localStorage.getItem(storageKey) || "{}");
+}
+function saveData(data) {
+  localStorage.setItem(storageKey, JSON.stringify(data));
+}
+
+function renderWeek(monday) {
+  const dates = getWeekDates(monday);
+  const data = loadData();
+  const tableHead = document.getElementById("date-row");
+  const tableBody = document.getElementById("habit-rows");
+  const weekRange = document.getElementById("weekRange");
+
+  tableHead.innerHTML = `<th>習慣</th>` +
+    dates.map(d => {
+      const day = ["日","月","火","水","木","金","土"][d.getDay()];
+      const color = (day === "土") ? "blue" : (day === "日") ? "red" : "";
+      return `<th style="color:${color}">${formatDate(d)}<br>${day}</th>`;
+    }).join("");
+
+  weekRange.textContent = `${formatDate(dates[0])}〜${formatDate(dates[6])}`;
+
+  tableBody.innerHTML = habits.map(habit => {
+    return `<tr>
+      <td>${habit}</td>
+      ${dates.map(d => {
+        const key = d.toISOString().slice(0,10);
+        const checked = data[habit]?.includes(key);
+        return `<td><button class="habit-btn ${checked?'done':''}" data-habit="${habit}" data-date="${key}"></button></td>`;
+      }).join("")}
+    </tr>`;
+  }).join("");
+
+  document.querySelectorAll(".habit-btn").forEach(btn => {
+    btn.onclick = () => {
+      const habit = btn.dataset.habit;
+      const date = btn.dataset.date;
+      const data = loadData();
+      if (!data[habit]) data[habit] = [];
+      if (data[habit].includes(date)) {
+        data[habit] = data[habit].filter(d => d !== date);
+        btn.classList.remove("done");
+      } else {
+        data[habit].push(date);
+        btn.classList.add("done");
+      }
+      saveData(data);
+    };
+  });
+}
+
+let monday = getMonday(new Date());
+renderWeek(monday);
+
+document.getElementById("prevWeek").onclick = () => {
+  monday.setDate(monday.getDate() - 7);
+  renderWeek(monday);
+};
+document.getElementById("nextWeek").onclick = () => {
+  monday.setDate(monday.getDate() + 7);
+  renderWeek(monday);
+};
+</script>
+</body>
+</html>
