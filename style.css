@@ -1,80 +1,55 @@
-/* ==============================
-   全体設定
-============================== */
 body {
   font-family: sans-serif;
   text-align: center;
-  margin: 0;
-  background-color: #fafafa; /* ごく薄いグレー（背景） */
+  margin: 20px;
 }
 
-/* ==============================
-   タイトル部分
-============================== */
-h1 {
-  background-color: #4CAF50; /* 明るいグリーン（メインカラー） */
-  color: white;
-  margin: 0;
-  padding: 1em;
-}
-
-/* ==============================
-   ボタンスタイル
-============================== */
-button {
-  width: 90%;
-  max-width: 200px;
-  font-size: 1.4em;       /* ← 大きくしてスマホでも押しやすく */
-  padding: 1.2em;         /* ← タップ領域拡大 */
-  margin: 0.7em;
-  border-radius: 14px;
-  border: none;
-  background-color: #e0e0e0; /* 薄いグレー（未実行状態） */
-  transition: background-color 0.2s, transform 0.1s;
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-button.done {
-  background-color: #81C784; /* 明るい緑（達成状態） */
-  color: white;
-}
-
-/* ==============================
-   テーブル表示
-============================== */
 table {
   border-collapse: collapse;
   margin: auto;
   width: 95%;
+  max-width: 600px;
 }
 
 th, td {
-  border: 1px solid #ccc; /* 薄いグレーの罫線 */
-  padding: 0.6em;
+  border: 1px solid #aaa; /* 灰色の境界線 */
+  padding: 10px;
   text-align: center;
 }
 
-/* ==============================
-   月見出し
-============================== */
-h2 {
-  margin-top: 1.8em;
-  text-align: left;
-  font-size: 1.3em;
-  color: #333; /* 濃いグレー（見出し文字） */
+.habit-btn {
+  width: 40px; height: 40px; /* ボタンサイズを大きく */
+  cursor: pointer;
+  background-color: #f0f0f0; /* 明るい灰色 */
 }
 
-/* ==============================
-   レスポンシブ調整
-============================== */
-@media (min-width: 600px) {
-  button { font-size: 1.6em; padding: 1.0em; }
+.habit-btn.done {
+  background-color: #4CAF50; /* 緑 (#4CAF50 はフラットなグリーン) */
+  color: white;
 }
 
-@media (max-width: 599px) {
-  button { font-size: 1.5em; padding: 1.3em; }
-  th, td { padding: 0.5em; }
+button {
+  font-size: 16px;
+  padding: 8px 14px;
+  margin: 4px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2196F3; /* 青 (#2196F3 は明るいスカイブルー) */
+  color: white;
+}
+
+button:hover {
+  background-color: #1976D2; /* 濃い青 (#1976D2 はロイヤルブルー系) */
+}
+
+@media (max-width: 600px) {
+  th, td {
+    padding: 6px;
+  }
+  .habit-btn {
+    width: 30px; height: 30px;
+  }
+  button {
+    font-size: 14px;
+  }
 }
