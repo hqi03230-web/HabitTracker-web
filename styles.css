@@ -1,0 +1,65 @@
+:root{
+  --color-bg: #ffffff;
+  --color-text: #222222;
+  --color-today: #e6f7ff; /* today's cell background: a pale sky-blue */
+  --color-checked: #4caf50; /* checked indicator: green */
+  --color-weekend: #ffe6e6; /* weekend date background hint: pale red */
+  --color-accent: #0066cc; /* accent / headers: blue */
+  --gap: 8px;
+}
+
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Hiragino Kaku Gothic ProN',Meiryo,sans-serif;
+  margin:0;padding:0;background:var(--color-bg);color:var(--color-text);
+  display:flex;flex-direction:column;min-height:100vh;
+}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px;border-bottom:1px solid #ddd;background:#fafafa}
+h1{font-size:18px;margin:0}
+.controls button{margin-left:8px}
+
+main{flex:1;padding:12px;display:flex;flex-direction:column;gap:12px}
+.week-header{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.week-header .day{padding:6px;text-align:center;border-radius:6px;font-size:14px}
+.week-header .sat,.week-header .sun{color:#c00;font-weight:600}
+
+.buttons-column{display:grid;grid-template-columns:40px 1fr;gap:6px;align-items:center}
+.habit-labels{display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:start;padding-top:22px}
+.habit-labels button{width:40px;height:40px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer}
+.habit-labels button.checked{background:var(--color-checked);color:#fff}
+.habit-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.habit-cell{min-height:48px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid #eee}
+.habit-cell.today{background:var(--color-today)}
+
+.week-row{display:grid;grid-template-columns:40px 1fr;gap:6px}
+.habit-name{writing-mode:vertical-rl;text-orientation:mixed;font-size:12px;padding:4px;transform:rotate(180deg)}
+
+.view.hidden{display:none}
+
+/* History view - months as columns */
+#history-container{display:flex;gap:12px;overflow:auto;padding-bottom:12px}
+.month-column{min-width:220px;border:1px solid #ddd;padding:8px;border-radius:6px;background:#fff}
+.month-column h3{text-align:center;margin:0 0 8px 0}
+.day-row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dashed #eee;font-size:13px}
+.day-row .mark{font-weight:700}
+
+/* Responsive */
+@media (max-width:600px){
+  .habit-labels{display:none}
+  .buttons-column{grid-template-columns:1fr}
+  .habit-cell{min-height:56px;padding:6px}
+  .week-header .day{font-size:12px}
+}
+
+
+/* History table styles */
+.table-wrap{overflow:auto}
+.history-table{border-collapse:collapse;width:100%;min-width:600px}
+.history-table th, .history-table td{border:1px solid #e6e6e6;padding:6px;text-align:center;font-size:13px}
+.history-table thead th{position:sticky;top:0;background:#fafafa;z-index:2}
+.history-table .habit-name-cell{text-align:left;padding-left:8px;font-weight:600;white-space:nowrap}
+.history-table th.weekend, .history-table td.weekend{color:#c00}
+.month-column{min-width:320px;padding:8px}
+@media (max-width:600px){
+  .history-table{min-width:480px}
+  .month-column{min-width:280px}
+}

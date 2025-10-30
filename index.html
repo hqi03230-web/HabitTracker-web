@@ -1,20 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Habit Tracker</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="main.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HabitTracker</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Habit Tracker</h1>
-  <div style="margin: 1em;">
-    <button id="exportBtn">export JSON</button>
-    <button id="importBtn">import JSON</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" />
-    <a href="history.html"><button>📅 履歴を見る</button></a>
-  </div>
-  <div id="app"></div>
+  <header>
+    <h1>HabitTracker</h1>
+    <div class="controls">
+      <button id="toggle-history">履歴一覧</button>
+      <button id="export-btn">export JSON</button>
+      <input id="import-file" type="file" accept="application/json" style="display:none" />
+      <button id="import-btn">import JSON</button>
+    </div>
+  </header>
+
+  <main id="app">
+    <section id="week-view" class="view">
+      <div id="week-header" class="week-header"></div>
+      <div id="buttons-column" class="buttons-column"></div>
+    </section>
+
+    <section id="history-view" class="view hidden">
+      <div id="history-container"></div>
+      <button id="back-week">戻る</button>
+    </section>
+  </main>
+
+  <footer>
+    <small>色コード: <span class="code-note">--color-today: #e6f7ff (今日の背景)</span> — <span class="code-note">--color-weekend: #ffe6e6 (土日の日付は赤)</span></small>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(console.error);
+    }
+  </script>
 </body>
 </html>
